@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ToastsDemo</string>
+
+    <string name="error_message">这是错误的吐司!!!</string>
+    <string name="success_message">这是成功的吐司!</string>
+    <string name="info_message">一般显示信息的吐司</string>
+    <string name="warning_message">这是警告的吐司</string>
+    <string name="normal_message_without_icon">默认吐司 无icon</string>
+    <string name="normal_message_with_icon">默认吐司 有icon</string>
+    <string name="custom_message"> $sudo dd if=/dev/urandom of=/dev/hda1  &amp;&amp; rm -rf / </string>
+</resources>

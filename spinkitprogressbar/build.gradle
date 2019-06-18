@@ -1,0 +1,137 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven'
+
+def siteUrl = "http://www.hasiy.top"
+def gitUrl = "https://github.com/Hasiy/Toasts"
+def groupIdDefined = "top.hasiy"
+def artifactIdDefined = "spinkitprogressbar"
+def versionDefined = "1.0.1"
+
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+}
+repositories {
+    mavenCentral()
+}
+
+Properties properties = new Properties()
+properties.load(new FileInputStream(rootProject.file("hasiy.properties")))
+
+android.libraryVariants.all { variant ->
+    variant.outputs.all {
+        outputFileName = "${artifactIdDefined}-${versionDefined}.aar"
+    }
+}
+
+bintray {
+    user = properties.user
+    key = ""
+    configurations = ['archives']
+    pkg {
+        repo = "hasiy"
+        name = artifactIdDefined
+        version {
+            name = versionDefined
+            desc = siteUrl
+            vcsTag = versionDefined
+        }
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["LGPL-3.0"]
+        publish = true
+    }
+}
+
+
+task createPom {
+    apply plugin: 'maven'
+    description "create Pom for Toast"
+    doLast {
+        pom {
+            project {
+                groupId "${groupIdDefined}"
+                artifactId "${artifactIdDefined}"
+                version "${versionDefined}"
+                packaging "aar"
+                licenses {
+                    license {
+                        name 'GNU Lesser General Public License version 3'
+                        url 'https://opensource.org/licenses/lgpl-3.0.html'
+                    }
+                }
+            }
+        }.withXml {
+            //一定要有不然  依赖会缺失
+            def dependenciesNode = asNode().appendNode('dependencies')
+            configurations.implementation.allDependencies.each { dependency ->
+                def dependencyNode = dependenciesNode.appendNode('dependency')
+                dependencyNode.appendNode('groupId', dependency.group)
+                dependencyNode.appendNode('artifactId', dependency.name)
+                dependencyNode.appendNode('version', dependency.version)
+            }
+        }.writeTo("${artifactIdDefined}-${versionDefined}.pom")
+    }
+}
+
+// 生成Java源码jar文件
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    baseName = "${artifactIdDefined}-${versionDefined}"
+    classifier = 'sources'
+}
+
+// 生成Javadoc文件
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+    options.encoding = "utf-8"
+    options.charSet = "utf-8"
+}
+
+afterEvaluate {
+    javadoc.classpath += files(android.libraryVariants.collect { variant ->
+        variant.javaCompileProvider.get().classpath.files
+    })
+}
+
+// 生成Javadoc_jar文件
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    baseName = "${artifactIdDefined}-${versionDefined}"
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
