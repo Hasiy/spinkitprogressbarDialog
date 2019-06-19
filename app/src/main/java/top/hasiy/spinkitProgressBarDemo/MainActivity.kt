@@ -56,8 +56,7 @@ class MainActivity : BaseActivity() {
         SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#a1c4fd"))
             .spinKitStatus(text).apply()
         // 设置显示效果
-        spinkitProgressBarDialog = SpinkitProgressBarDialog.instance("正在加载中...")
-        showProgressBar()
+        showBaseProgressBar()
         timer.schedule(object : TimerTask() {
             override fun run() {
                 dismissBaseProgressBar()
