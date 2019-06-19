@@ -43,8 +43,9 @@ class SpinkitProgressBarDialog : DialogFragment() {
         this.message = bundle.getString("message") ?: "加载中..."
         this.spinKitColor = bundle.getInt("spinKitColor")
         this.spinKitStatus = bundle.getString("spinKitStatus") ?: "FoldingCube"
+        serviceCurrentMills = System.currentTimeMillis()
+        loadingCompleted = true
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -75,9 +76,6 @@ class SpinkitProgressBarDialog : DialogFragment() {
         }
         loadingBar.setIndeterminateDrawable(spinKit)
         loadingBar.setColor(spinKitColor)
-        Log.e("Hasiy", "onCreateView")
-        serviceCurrentMills = System.currentTimeMillis()
-        loadingCompleted = true
         return rootView
     }
 
@@ -95,31 +93,28 @@ class SpinkitProgressBarDialog : DialogFragment() {
     }
 
     override fun dismiss() {
-        // 防止未完成显示就关闭引发catch
+        // 防止未完成显示就关闭,引发catch
         if (System.currentTimeMillis() - serviceCurrentMills > 500 && loadingCompleted && !dismissCompleted) {
             try {
                 super.dismiss()
-                Log.e("Hasiy", "dismiss")
                 dismissCompleted = true
                 loadingCompleted = false
             } catch (e: Exception) {
                 e.printStackTrace()
-                Log.e("Hasiy", "SpinkitProgressBarError_$e.toString()")
+                Log.e("Hasiy", "SpinkitProgressBarError:$e.toString()")
             }
         } else if (!dismissCompleted) {
-            Log.d("Hasiy", "dismiss:isShow:$loadingCompleted")
             val timer = Timer()
             timer.schedule(object : TimerTask() {
                 override fun run() {
                     dismiss()
                 }
-            }, 500)
+            }, 300)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         loadingCompleted = false
-        Log.e("Hasiy", "onSaveInstanceState")
         super.onSaveInstanceState(outState)
     }
 
@@ -134,9 +129,8 @@ class SpinkitProgressBarDialog : DialogFragment() {
         var messageShow: Boolean = false
         var spinKitColor: Int = Color.parseColor("#438BF9") // 默认加载动画颜色为#438BF9
         var spinKitStatus: String = "FoldingCube" // 默认加载动画是 FoldingCube
-        /**
-         */
-        fun newInstance(message: String): SpinkitProgressBarDialog {
+
+        fun instance(message: String): SpinkitProgressBarDialog {
             val fragment = SpinkitProgressBarDialog()
             val bundle = Bundle()
             bundle.putString("message", message)

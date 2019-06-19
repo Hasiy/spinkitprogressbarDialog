@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">DialogSpinKit</string>
+    <string name="app_name">spinkitprogressbar</string>
     <string name="loading">loading…</string>
 </resources>

@@ -8,7 +8,7 @@ def siteUrl = "http://www.hasiy.top"
 def gitUrl = "https://github.com/Hasiy/Toasts"
 def groupIdDefined = "top.hasiy"
 def artifactIdDefined = "spinkitprogressbar"
-def versionDefined = "1.0.1"
+def versionDefined = "1.1.1"
 
 
 android {
@@ -72,7 +72,7 @@ bintray {
 
 task createPom {
     apply plugin: 'maven'
-    description "create Pom for Toast"
+    description "create Pom for spinkitprogressbar"
     doLast {
         pom {
             project {

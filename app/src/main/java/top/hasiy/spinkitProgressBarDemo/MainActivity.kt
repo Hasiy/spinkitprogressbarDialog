@@ -14,21 +14,56 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         dialog1.setOnClickListener {
-            SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#a1c4fd")).spinKitStatus("WanderingCubes")
-                .apply()
-            spinkitProgressBarDialog = SpinkitProgressBarDialog.newInstance("正在加载中...")
-
-            showBaseProgressBar()
-            dismissBaseProgressBar()
-
-            val timer = Timer()
-            timer.schedule(object : TimerTask() {
-                override fun run() {
-                    showBaseProgressBar("123123")
-                    dismissBaseProgressBar()
-                }
-            }, 800)
+            show("RotatingPlane")
         }
+        dialog2.setOnClickListener {
+            show("DoubleBounce")
+        }
+        dialog3.setOnClickListener {
+            show("Wave")
+        }
+        dialog4.setOnClickListener {
+            show("WanderingCubes")
+        }
+        dialog5.setOnClickListener {
+            show("Pulse")
+        }
+        dialog6.setOnClickListener {
+            show("ChasingDots")
+        }
+        dialog7.setOnClickListener {
+            show("ThreeBounce")
+        }
+        dialog8.setOnClickListener {
+            show("Circle")
+        }
+        dialog9.setOnClickListener {
+            show("CubeGrid")
+        }
+        dialog10.setOnClickListener {
+            show("FadingCircle")
+        }
+        dialog11.setOnClickListener {
+            show("FoldingCube")
+        }
+        dialog12.setOnClickListener {
+            show("RotatingCircle")
+        }
+    }
+
+    private fun show(text: String) {
+        val timer = Timer()
+        SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#a1c4fd"))
+            .spinKitStatus(text).apply()
+        // 设置显示效果
+        spinkitProgressBarDialog = SpinkitProgressBarDialog.instance("正在加载中...")
+        showProgressBar()
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                dismissBaseProgressBar()
+            }
+        }, 3000)
+
     }
 
 }

@@ -22,34 +22,36 @@ abstract class BaseActivity : AppCompatActivity(), SpinkitProgressBarDialogManag
     override lateinit var spinkitProgressBarDialog: SpinkitProgressBarDialog
 
     override fun onStart() {
-        SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#a1c4fd")).spinKitStatus("WanderingCubes")
+        SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#a1c4fd"))
+            .spinKitStatus("WanderingCubes")
             .apply()
-        spinkitProgressBarDialog = SpinkitProgressBarDialog.newInstance("正在加载中...")
         super.onStart()
     }
 
-    override fun onPause() {
-        Log.e("Hasiy", "onPause")
-        dismissSpinkitProgressBarDialog()
-        super.onPause()
-    }
-
-    fun showBaseProgressBar() {
-        showSpinkitProgressBarDialog(supportFragmentManager)
-    }
-
     fun dismissBaseProgressBar() {
-//        Log.e("Hasiy", "isDestroyed:${this.isDestroyed}")
-//        Log.e("Hasiy", "isFinishing:${this.isFinishing}")
         if (!this.isDestroyed && !this.isFinishing) {
             dismissSpinkitProgressBarDialog()
         }
     }
 
+    fun showProgressBar() {
+        showSpinkitProgressBarDialog(supportFragmentManager)
+    }
+
+    fun showBaseProgressBar() {
+        SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#a1c4fd"))
+            .spinKitStatus("WanderingCubes")
+            .apply()
+        spinkitProgressBarDialog = SpinkitProgressBarDialog.instance("正在加载中...")
+        showProgressBar()
+    }
+
     fun showBaseProgressBar(text: String) {
-        SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#438BF9")).spinKitStatus("Circle").apply()
-        spinkitProgressBarDialog = SpinkitProgressBarDialog.newInstance(text)
-        showBaseProgressBar()
+        SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#438BF9"))
+            .spinKitStatus("Circle")
+            .apply()
+        spinkitProgressBarDialog = SpinkitProgressBarDialog.instance(text)
+        showProgressBar()
     }
 
 

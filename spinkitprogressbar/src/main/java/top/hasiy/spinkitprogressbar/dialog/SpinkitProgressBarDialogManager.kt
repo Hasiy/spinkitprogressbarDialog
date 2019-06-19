@@ -1,8 +1,6 @@
 package top.hasiy.spinkitprogressbar.dialog
 
-import android.util.Log
 import androidx.fragment.app.FragmentManager
-import java.util.*
 
 /**
  * @Author: Hasiy
@@ -20,7 +18,6 @@ interface SpinkitProgressBarDialogManager {
     fun showSpinkitProgressBarDialog(supportFragmentManager: FragmentManager) {
         if (!loadingIsShow) {
             loadingIsShow = true
-            Log.d("Hasiy", "showBaseProgressBar")
             spinkitProgressBarDialog.show(supportFragmentManager, "showSpinkitProgressBarDialog")
         }
     }
