@@ -4,8 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven'
 
-def siteUrl = "http://www.hasiy.top"
-def gitUrl = "https://github.com/Hasiy/Toasts"
+def siteUrl = "https://github.com/Hasiy/spinkitprogressbarDialog"
+def gitUrl = "https://github.com/Hasiy/spinkitprogressbarDialog"
 def groupIdDefined = "top.hasiy"
 def artifactIdDefined = "spinkitprogressbar"
 def versionDefined = "1.1.1"
@@ -134,4 +134,3 @@ artifacts {
     archives javadocJar
     archives sourcesJar
 }
-
