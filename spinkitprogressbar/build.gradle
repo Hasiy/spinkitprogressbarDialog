@@ -8,7 +8,7 @@ def siteUrl = "https://github.com/Hasiy/spinkitprogressbarDialog"
 def gitUrl = "https://github.com/Hasiy/spinkitprogressbarDialog"
 def groupIdDefined = "top.hasiy"
 def artifactIdDefined = "spinkitprogressbar"
-def versionDefined = "1.1.1"
+def versionDefined = "1.2.0"
 
 
 android {

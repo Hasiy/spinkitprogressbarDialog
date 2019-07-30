@@ -32,7 +32,6 @@ class SpinkitProgressBarDialog : DialogFragment() {
     private lateinit var loadingBar: SpinKitView
     private var serviceCurrentMills = 0L
     private var loadingCompleted: Boolean = false
-    private var dismissCompleted: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +80,6 @@ class SpinkitProgressBarDialog : DialogFragment() {
 
     override fun show(manager: FragmentManager, tag: String?) {
         if (!loadingCompleted) {
-            dismissCompleted = false
             try {
                 val transaction = manager.beginTransaction()
                 transaction.add(this, tag)
@@ -94,22 +92,22 @@ class SpinkitProgressBarDialog : DialogFragment() {
 
     override fun dismiss() {
         // 防止未完成显示就关闭,引发catch
-        if (System.currentTimeMillis() - serviceCurrentMills > 500 && loadingCompleted && !dismissCompleted) {
+        if (System.currentTimeMillis() - serviceCurrentMills > 100 && loadingCompleted ) {
             try {
                 super.dismiss()
-                dismissCompleted = true
                 loadingCompleted = false
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.e("Hasiy", "SpinkitProgressBarError:$e.toString()")
             }
-        } else if (!dismissCompleted) {
+        } else {
             val timer = Timer()
             timer.schedule(object : TimerTask() {
                 override fun run() {
+                    Log.e("hasiy","::dismiss::timer")
                     dismiss()
                 }
-            }, 300)
+            }, 50)
         }
     }
 
