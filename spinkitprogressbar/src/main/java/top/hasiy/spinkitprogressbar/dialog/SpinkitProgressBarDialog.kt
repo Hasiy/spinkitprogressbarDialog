@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import com.github.ybq.android.spinkit.SpinKitView
-import com.github.ybq.android.spinkit.sprite.Sprite
-import com.github.ybq.android.spinkit.style.*
+import top.hasiy.spinkit.SpinKitView
+import top.hasiy.spinkit.sprite.Sprite
+import top.hasiy.spinkit.style.*
 import android.util.Log
 import android.view.*
 import java.util.*
