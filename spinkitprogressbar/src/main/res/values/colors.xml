@@ -2,6 +2,6 @@
 <resources>
     <color name="dialogBackgroundColor">#9A000000</color>
     <color name="dialogTextColor">#FFFFFF</color>
-    <color name="dialogLoadingColor">#438BF9</color>
+    <color name="dialogLoadingColor">#a3bded</color>
 
 </resources>

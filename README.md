@@ -1,20 +1,18 @@
 # spinkitprogressbarDialog
 
-> Android 加载 ProgressBarDialog 基于spinkit动画(参照[SpinKit](<https://github.com/ybq/Android-SpinKit>)）
->
-> 基于DialogFragment（）不会发生 WindowLeaked 错误
+> Android 加载 ProgressBarDialog 基于spinkit动画(参照[SpinKit](https://github.com/Hasiy/Android-SpinKit)）
+
+> 基于DialogFragment 不会发生 WindowLeaked 错误
 
 ## 效果
 
-<img src="https://raw.githubusercontent.com/ybq/AndroidSpinKit/master/art/screen.gif" width="240px" height="240px"/>
-
+<img src="http://ww1.sinaimg.cn/large/8c95cb62gy1g678umt2q5g208w08xn2k.gif" width="280px" height="280px"/>
 
 ##  Gradle 设置
 
-
  ``` gradle
 dependencies {
-       implementation 'top.hasiy:spinkitprogressbar:1.1.1'
+       implementation 'top.hasiy:spinkitprogressbar:1.2.2'
  }
  ```
 
@@ -26,6 +24,7 @@ abstract class BaseActivity : AppCompatActivity(), SpinkitProgressBarDialogManag
 override var loadingIsShow: Boolean = false
 override lateinit var spinkitProgressBarDialog: SpinkitProgressBarDialog
     
+    //初始化Dialog
     override fun onStart() {
         SpinkitProgressBarDialogConfig.instance
         .messageShow(true)
@@ -33,19 +32,12 @@ override lateinit var spinkitProgressBarDialog: SpinkitProgressBarDialog
         .spinKitColor(Color.parseColor("#a1c4fd"))
         //设置spinKit显示颜色         
         .spinKitStatus("WanderingCubes")
-        // 设置加载动画 详情 https://github.com/ybq/Android-SpinKit
+        // 设置加载动画 
         .apply()
         //应用
         //SpinkitProgressBarDialogConfig.reset()  恢复默认设置
          super.onStart()
  	}
-	
-    //关闭 Dialog
-    fun dismissBaseProgressBar() {
-        if (!this.isDestroyed && !this.isFinishing) {
-            dismissSpinkitProgressBarDialog()
-        }
-    }
 
     private fun showProgressBar() {
       showSpinkitProgressBarDialog(supportFragmentManager)
@@ -75,6 +67,13 @@ override lateinit var spinkitProgressBarDialog: SpinkitProgressBarDialog
         showProgressBar()
     }
 
+    //关闭 Dialog
+    fun dismissBaseProgressBar() {
+        if (!this.isDestroyed && !this.isFinishing) {
+            dismissSpinkitProgressBarDialog()
+        }
+    }
+    
 }
 ```
 
@@ -84,7 +83,7 @@ override lateinit var spinkitProgressBarDialog: SpinkitProgressBarDialog
     显示 ：        showBaseProgressBar()  ||  showBaseProgressBar("加载中...")
     关闭 ：        dismissBaseProgressBar()
 ### 调用Demo：
-![VOfsB9.jpg](https://s2.ax1x.com/2019/06/19/VOfsB9.jpg)
+<img src="https://s2.ax1x.com/2019/06/19/VOfsB9.jpg" width="300px" height="600px"/>
 
 ### SpinKitStatus样式:
 
@@ -102,10 +101,8 @@ override lateinit var spinkitProgressBarDialog: SpinkitProgressBarDialog
 | FadingCircle   | <img src='https://raw.githubusercontent.com/ybq/AndroidSpinKit/master/art/FadingCircle.gif' alt='FadingCircle' width="90px" height="90px"/> |
 | FoldingCube    | <img src='https://raw.githubusercontent.com/ybq/AndroidSpinKit/master/art/FoldingCube.gif' alt='FoldingCube' width="90px" height="90px"/> |
 | RotatingCircle | <img src='https://raw.githubusercontent.com/ybq/AndroidSpinKit/master/art/RotatingCircle.gif' alt='RotatingCircle' width="90px" height="90px"/> |
+| Heartbeat        | <img src='http://ww1.sinaimg.cn/large/8c95cb62gy1g679fzbszeg208w08ytge.gif' alt='Heartbeat' width="95px" height="90px"/>|
 
+## Library used
 
-
-## 感谢
-
-- [SpinKit](https://github.com/tobiasahlin/SpinKit).
-- [Android-SpinKit](https://github.com/ybq/Android-SpinKit).
+- [Android-SpinKit](https://github.com/Hasiy/Android-SpinKit).

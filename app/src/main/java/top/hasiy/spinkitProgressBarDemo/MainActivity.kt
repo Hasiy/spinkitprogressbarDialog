@@ -51,34 +51,35 @@ class MainActivity : BaseActivity() {
         dialog12.setOnClickListener {
             show("RotatingCircle")
         }
+        dialog13.setOnClickListener {
+            show("Heartbeat")
+        }
     }
 
     private fun show(text: String) {
         val timer = Timer()
-        SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#a1c4fd"))
+        SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#a3bded"))
             .spinKitStatus(text).apply()
         // 设置显示效果
-        showBaseProgressBar()
-        dismissBaseProgressBar()
+//        showBaseProgressBar()
+//        dismissBaseProgressBar()
 
-        showBaseProgressBar("哈哈哈哈哈")
+        showBaseProgressBar("Loading...")
 
         timer.schedule(object : TimerTask() {
             override fun run() {
                 dismissBaseProgressBar()
             }
         }, 5000)
-
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-            Log.e("hasiy","::onKeyDown ")
+            Log.e("hasiy", "::onKeyDown ")
             dismissBaseProgressBar()
             return true
-        }else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Log.e("hasiy","::onKeyDown ")
+        } else if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Log.e("hasiy", "::onKeyDown ")
             dismissBaseProgressBar()
             return true
         }
@@ -88,7 +89,7 @@ class MainActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item!!.itemId == android.R.id.home) {
-            Log.e("hasiy","::onKeyDown ")
+            Log.e("hasiy", "::onKeyDown ")
             dismissBaseProgressBar()
             return true
         }

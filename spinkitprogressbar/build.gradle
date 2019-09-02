@@ -8,7 +8,7 @@ def siteUrl = "https://github.com/Hasiy/spinkitprogressbarDialog"
 def gitUrl = "https://github.com/Hasiy/spinkitprogressbarDialog"
 def groupIdDefined = "top.hasiy"
 def artifactIdDefined = "spinkitprogressbar"
-def versionDefined = "1.2.1"
+def versionDefined = "1.2.2"
 
 android {
     compileSdkVersion 28
@@ -37,37 +37,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'top.hasiy:Android-SpinKit:1.0.0'
+    implementation 'top.hasiy:Android-SpinKit:1.0.1'
 }
-
-Properties properties = new Properties()
-properties.load(new FileInputStream(rootProject.file("hasiy.properties")))
 
 android.libraryVariants.all { variant ->
     variant.outputs.all {
         outputFileName = "${artifactIdDefined}-${versionDefined}.aar"
     }
 }
-
-bintray {
-    user = properties.user
-    key = ""
-    configurations = ['archives']
-    pkg {
-        repo = "hasiy"
-        name = artifactIdDefined
-        version {
-            name = versionDefined
-            desc = siteUrl
-            vcsTag = versionDefined
-        }
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["LGPL-3.0"]
-        publish = true
-    }
-}
-
 
 task createPom {
     apply plugin: 'maven'

@@ -71,9 +71,11 @@ class SpinkitProgressBarDialog : DialogFragment() {
             "FadingCircle" -> FadingCircle()
             "FoldingCube" -> FoldingCube()
             "RotatingCircle" -> RotatingCircle()
+            "Heartbeat" -> Heartbeat()
             else -> FoldingCube()
         }
         loadingBar.setIndeterminateDrawable(spinKit)
+        loadingBar
         loadingBar.setColor(spinKitColor)
         return rootView
     }
@@ -92,7 +94,7 @@ class SpinkitProgressBarDialog : DialogFragment() {
 
     override fun dismiss() {
         // 防止未完成显示就关闭,引发catch
-        if (System.currentTimeMillis() - serviceCurrentMills > 100 && loadingCompleted ) {
+        if (System.currentTimeMillis() - serviceCurrentMills > 100 && loadingCompleted) {
             try {
                 super.dismiss()
                 loadingCompleted = false
@@ -104,10 +106,10 @@ class SpinkitProgressBarDialog : DialogFragment() {
             val timer = Timer()
             timer.schedule(object : TimerTask() {
                 override fun run() {
-                    Log.e("hasiy","::dismiss::timer")
+                    Log.e("hasiy", "::dismiss::timer")
                     dismiss()
                 }
-            }, 50)
+            }, 90)
         }
     }
 
@@ -140,6 +142,3 @@ class SpinkitProgressBarDialog : DialogFragment() {
         }
     }
 }
-
-
- 
