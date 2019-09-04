@@ -10,6 +10,7 @@ import top.hasiy.spinkit.sprite.Sprite
 import top.hasiy.spinkit.style.*
 import android.util.Log
 import android.view.*
+import top.hasiy.spinkit.BuildConfig
 import java.util.*
 
 /**
@@ -32,6 +33,8 @@ class SpinkitProgressBarDialog : DialogFragment() {
     private lateinit var loadingBar: SpinKitView
     private var serviceCurrentMills = 0L
     private var loadingCompleted: Boolean = false
+    private var dismissCompleted: Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,13 +78,13 @@ class SpinkitProgressBarDialog : DialogFragment() {
             else -> FoldingCube()
         }
         loadingBar.setIndeterminateDrawable(spinKit)
-        loadingBar
         loadingBar.setColor(spinKitColor)
         return rootView
     }
 
     override fun show(manager: FragmentManager, tag: String?) {
         if (!loadingCompleted) {
+            dismissCompleted = false
             try {
                 val transaction = manager.beginTransaction()
                 transaction.add(this, tag)
@@ -94,19 +97,25 @@ class SpinkitProgressBarDialog : DialogFragment() {
 
     override fun dismiss() {
         // 防止未完成显示就关闭,引发catch
-        if (System.currentTimeMillis() - serviceCurrentMills > 100 && loadingCompleted) {
+        if (System.currentTimeMillis() - serviceCurrentMills > 100 && loadingCompleted && !dismissCompleted) {
             try {
                 super.dismiss()
                 loadingCompleted = false
+                dismissCompleted = true
+                if (BuildConfig.DEBUG) {
+                    Log.e("Hasiy", "  super.dismiss()" + System.currentTimeMillis() + "message:" + message)
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.e("Hasiy", "SpinkitProgressBarError:$e.toString()")
             }
-        } else {
+        } else if (!dismissCompleted) {
             val timer = Timer()
             timer.schedule(object : TimerTask() {
                 override fun run() {
-                    Log.e("hasiy", "::dismiss::timer")
+                    if (BuildConfig.DEBUG) {
+                        Log.e("Hasiy", "dismiss::timer" + System.currentTimeMillis() + "message:" + message)
+                    }
                     dismiss()
                 }
             }, 90)

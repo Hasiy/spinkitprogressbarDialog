@@ -4,8 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven'
 
-def siteUrl = "https://github.com/Hasiy/spinkitprogressbarDialog"
-def gitUrl = "https://github.com/Hasiy/spinkitprogressbarDialog"
 def groupIdDefined = "top.hasiy"
 def artifactIdDefined = "spinkitprogressbar"
 def versionDefined = "1.2.2"
@@ -79,7 +77,7 @@ task createPom {
 // 生成Java源码jar文件
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
-    baseName = "${artifactIdDefined}-${versionDefined}"
+    getArchiveBaseName = "${artifactIdDefined}-${versionDefined}"
     classifier = 'sources'
 }
 

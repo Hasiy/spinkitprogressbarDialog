@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>top.hasiy</groupId>
   <artifactId>spinkitprogressbar</artifactId>
-  <version>1.2.1</version>
+  <version>1.2.2</version>
   <packaging>aar</packaging>
   <licenses>
     <license>
@@ -35,7 +35,7 @@
     <dependency>
       <groupId>top.hasiy</groupId>
       <artifactId>Android-SpinKit</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1</version>
     </dependency>
   </dependencies>
 </project>

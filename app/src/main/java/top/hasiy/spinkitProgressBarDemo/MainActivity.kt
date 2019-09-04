@@ -60,40 +60,27 @@ class MainActivity : BaseActivity() {
         val timer = Timer()
         SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#a3bded"))
             .spinKitStatus(text).apply()
-        // 设置显示效果
-//        showBaseProgressBar()
-//        dismissBaseProgressBar()
 
-        showBaseProgressBar("Loading...")
+        Log.e("Hasiy", "SpinkitProgressBar0")
+        showBaseProgressBar("SpinkitProgressBar0")
+        dismissBaseProgressBar()
+        Log.e("Hasiy", "SpinkitProgressBar1")
+        showBaseProgressBar("SpinkitProgressBar1")
+        dismissBaseProgressBar()
+        Log.e("Hasiy", "SpinkitProgressBar2")
+        showBaseProgressBar("SpinkitProgressBar2")
+        dismissBaseProgressBar()
+        Log.e("Hasiy", "SpinkitProgressBar3")
+        showBaseProgressBar("SpinkitProgressBar3")
+        dismissBaseProgressBar()
 
-        timer.schedule(object : TimerTask() {
-            override fun run() {
-                dismissBaseProgressBar()
-            }
-        }, 5000)
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-            Log.e("hasiy", "::onKeyDown ")
-            dismissBaseProgressBar()
-            return true
-        } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Log.e("hasiy", "::onKeyDown ")
-            dismissBaseProgressBar()
-            return true
-        }
-        return false
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item!!.itemId == android.R.id.home) {
-            Log.e("hasiy", "::onKeyDown ")
-            dismissBaseProgressBar()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
+//        showBaseProgressBar("Loading...")
+//
+//        timer.schedule(object : TimerTask() {
+//            override fun run() {
+//                dismissBaseProgressBar()
+//            }
+//        }, 5000)
     }
 
 }
