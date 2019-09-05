@@ -1,3 +1,7 @@
+import org.gradle.util.GUtil
+
+import java.util.concurrent.Callable
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -6,13 +10,15 @@ apply plugin: 'maven'
 
 def groupIdDefined = "top.hasiy"
 def artifactIdDefined = "spinkitprogressbar"
-def versionDefined = "1.2.2"
+def versionDefined = "1.2.3"
 
 android {
     compileSdkVersion 28
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
+        versionCode 123
+        versionName "1.2.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -77,8 +83,7 @@ task createPom {
 // 生成Java源码jar文件
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
-    getArchiveBaseName = "${artifactIdDefined}-${versionDefined}"
-    classifier = 'sources'
+    archiveFileName = "${artifactIdDefined}-${versionDefined}-${"sources"}.jar"
 }
 
 // 生成Javadoc文件
@@ -99,12 +104,6 @@ afterEvaluate {
 
 // 生成Javadoc_jar文件
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    baseName = "${artifactIdDefined}-${versionDefined}"
-    classifier = 'javadoc'
+    archiveFileName = "${artifactIdDefined}-${versionDefined}-${"javadoc"}.jar"
     from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
 }
