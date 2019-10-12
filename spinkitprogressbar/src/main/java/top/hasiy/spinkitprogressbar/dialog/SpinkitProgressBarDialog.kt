@@ -10,7 +10,9 @@ import top.hasiy.spinkit.sprite.Sprite
 import top.hasiy.spinkit.style.*
 import android.util.Log
 import android.view.*
+import kotlinx.android.synthetic.main.spinkit_progressbar_dialog_layout.*
 import top.hasiy.spinkit.BuildConfig
+import top.hasiy.spinkitprogressbar.R
 import java.util.*
 
 /**
@@ -25,21 +27,18 @@ import java.util.*
 class SpinkitProgressBarDialog : DialogFragment() {
 
     private var messageShow: Boolean = false
-    private lateinit var message: String
     private var spinKitColor: Int = Color.parseColor("#438BF9") // 默认加载动画颜色为#438BF9
-    private lateinit var spinKitStatus: String   // 默认加载动画是 FoldingCube 详情 https://github.com/ybq/Android-SpinKit
     private var spinKit: Sprite = FadingCircle()
-    private lateinit var loadingMessage: TextView
-    private lateinit var loadingBar: SpinKitView
+    private var spinKitStatus: String = "FoldingCube"  // 默认加载动画是 FoldingCube 详情 https://github.com/ybq/Android-SpinKit
+    private var message: String = ""
     private var serviceCurrentMills = 0L
     private var loadingCompleted: Boolean = false
     private var dismissCompleted: Boolean = false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCancelable = false
-        setStyle(STYLE_NO_TITLE, top.hasiy.spinkitprogressbar.R.style.dialogStyles)
+        setStyle(STYLE_NO_TITLE, R.style.dialogStyles)
         val bundle = arguments
         this.messageShow = bundle!!.getBoolean("messageShow")
         this.message = bundle.getString("message") ?: "加载中..."
@@ -50,17 +49,19 @@ class SpinkitProgressBarDialog : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        val rootView: View = inflater.inflate(top.hasiy.spinkitprogressbar.R.layout.spinkit_progressbar_dialog_layout, container, false)
-        loadingMessage = rootView.findViewById(top.hasiy.spinkitprogressbar.R.id.loading_message) as TextView
+        dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        return inflater.inflate(R.layout.spinkit_progressbar_dialog_layout, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         when (messageShow) {
             true -> {
-                loadingMessage.visibility = View.VISIBLE
-                loadingMessage.text = message
+                loading_message.visibility = View.VISIBLE
+                loading_message.text = message
             }
-            false -> loadingMessage.visibility = View.GONE
+            false -> loading_message.visibility = View.GONE
         }
-        loadingBar = rootView.findViewById(top.hasiy.spinkitprogressbar.R.id.loadingBar) as SpinKitView
         spinKit = when (spinKitStatus) {
             "RotatingPlane" -> RotatingPlane()
             "DoubleBounce" -> DoubleBounce()
@@ -79,7 +80,6 @@ class SpinkitProgressBarDialog : DialogFragment() {
         }
         loadingBar.setIndeterminateDrawable(spinKit)
         loadingBar.setColor(spinKitColor)
-        return rootView
     }
 
     override fun show(manager: FragmentManager, tag: String?) {
@@ -126,8 +126,7 @@ class SpinkitProgressBarDialog : DialogFragment() {
         loadingCompleted = false
         super.onSaveInstanceState(outState)
     }
-
-
+    
     companion object {
         /**
          *  messageShow 是否显示Loading文字
