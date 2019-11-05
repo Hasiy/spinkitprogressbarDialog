@@ -1,7 +1,8 @@
-package top.hasiy.spinkitProgressBarDemo
+package top.hasiy.spinkitProgressBarDemo.base
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import top.hasiy.spinkitprogressbar.dialog.SpinkitProgressBarDialog
@@ -20,6 +21,13 @@ import top.hasiy.spinkitprogressbar.dialog.SpinkitProgressBarDialogManager
 abstract class BaseActivity : AppCompatActivity(), SpinkitProgressBarDialogManager {
     override var loadingIsShow: Boolean = false
     override lateinit var spinkitProgressBarDialog: SpinkitProgressBarDialog
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initUI()
+    }
+
+    abstract fun initUI()
 
     override fun onStart() {
         SpinkitProgressBarDialogConfig.instance.messageShow(true).spinKitColor(Color.parseColor("#a1c4fd"))

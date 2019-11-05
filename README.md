@@ -6,13 +6,15 @@
 
 ## 效果
 
-<img src="http://ww1.sinaimg.cn/large/8c95cb62gy1g678umt2q5g208w08xn2k.gif" width="280px" height="280px"/>
+<img src="http://ww1.sinaimg.cn/large/8c95cb62gy1g8napr4cu1j20u01qcn0l.jpg" width="270px" height="561px"/>
+
+<img src="http://ww1.sinaimg.cn/large/8c95cb62gy1g8nap2n7ajj20u01qcjv7.jpg" width="270px" height="561px"/>
 
 ##  Gradle 设置
 
  ``` gradle
 dependencies {
-       implementation 'top.hasiy:spinkitprogressbar:1.2.2'
+       implementation 'top.hasiy:spinkitprogressbar:1.3.0'
  }
  ```
 
